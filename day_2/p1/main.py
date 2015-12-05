@@ -12,5 +12,4 @@ with open('../input.txt','r') as fp:
 		(s,m,lg) = sorted([l,w,h])
 		slack = s*m
 		total_area += area + slack
-		line = fp.readline()
 print('total_area: %d' % total_area)
