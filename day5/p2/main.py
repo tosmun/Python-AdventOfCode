@@ -1,12 +1,10 @@
 import re
 
-def findFirst(pattern, line):
-	return next(pattern.finditer(line), None)
+def matches(pattern, line):
+	return next(pattern.finditer(line), None) is not None
 
-VOWEL_PATTERN=re.compile(r'a|e|i|o|u')
-VOWEL_MIN=3
-DOUBLE_CHAR_PATTERN=re.compile(r'([A-Za-z])\1{1,}')
-INVALID_SEQ_PATTERN=re.compile(r'(?:ab|cd|pq|xy)')
+PAIR_PATTERN=re.compile(r'([A-Za-z][A-Za-z]).*\1')
+INBETWEEN_CHAR_PATTERN=re.compile(r'([A-Za-z])[A-Za-z]\1')
 
 nice_count=0
 with open('../input.txt','r') as fp:
@@ -17,15 +15,9 @@ with open('../input.txt','r') as fp:
 		line = line.strip()
 		if line == '':
 			continue
-		#Contains at least one double char
-		doubleMatch = findFirst(DOUBLE_CHAR_PATTERN, line)
-		if doubleMatch is None or len(doubleMatch.groups()) < 0:
+		if not matches(PAIR_PATTERN, line):
 			continue
-		#Contains any invalid sequences of chars
-		if findFirst(INVALID_SEQ_PATTERN, line) is not None:
-			continue
-		#Total number of vowels
-		if len(tuple(VOWEL_PATTERN.findall(line))) < VOWEL_MIN:
+		if not matches(INBETWEEN_CHAR_PATTERN, line):
 			continue
 		nice_count += 1
 print('nice_count: %d' % nice_count)
