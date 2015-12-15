@@ -25,7 +25,7 @@ if __name__ == '__main__':
 		total_amount = 0
 		for amount in amounts:
 			total_amount += amount
-		#Must amount to 100 - #TODO Surely there is a better efficient way?
+		#Must amount to 100 - #TODO Surely there is a better way?
 		if total_amount != 100:
 			continue
 		total_calories = 0
@@ -46,14 +46,9 @@ if __name__ == '__main__':
 		#Calories must be exactly 500
 		if total_calories != 500:
 			continue
-		if total_capacity < 0:
-			total_capacity = 0
-		if total_durability < 0:
-			total_durability = 0
-		if total_flavor < 0:
-			total_flavor = 0
-		if total_texture < 0:
-			total_texture = 0
+		#We can assume score will be 0
+                if total_capacity < 0 or total_durability < 0 or total_flavor < 0 or total_texture < 0:
+                        continue
 		total_score = total_capacity * total_durability * total_flavor * total_texture
 		if total_score > best_score[0]:
 			best_score = (total_score, amounts)
